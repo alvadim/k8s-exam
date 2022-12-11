@@ -1,0 +1,14 @@
+kind: Service     
+apiVersion: v1
+metadata:
+  name: messaging-servise
+  labels: 
+    tier: msg
+spec:
+  selector:
+    app: messaging-servise
+  ports:         
+  - name: messaging-servise
+    protocol: TCP
+    port: 6379
+    

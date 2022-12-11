@@ -1,0 +1,74 @@
+1.v kubectl run nginx-pod-alvadim --image=nginx:alpine 
+
+2.v kubectl run messaging --image=redis:alpine -l tier=msg 
+
+3.v kubectl create ns apx-x998-alvadim 
+
+4.v kubectl get nodes -o json > /tmp/nodes-yourname
+
+5.v  kubectl create service clusterip messaging-service --tcp=6379:6379
+     kubectl label service messaging-service tier=msg
+
+6.v  q6.yaml
+
+7.v kubectl create deployment hr-web-app --image=kodekloud/webapp-color --replicas=2
+
+8.v 1- kubectl run static-busybox --image=busybox --dry-run=client -o yaml > static-busybox.yaml
+    2- add command sleep 1000 to static-busybox.yaml
+    3- cp static-busybox.yaml /etc/kubernetes/manifests
+    see static-busybox.yaml
+
+9.v  kubectl create ns finance-alvadim
+    kubectl run temp-bus --image=redis:alpine --namespace=finance-alvadim
+    also q9.yaml
+
+10.v q10.yaml
+
+11.v q11.yaml
+
+12.v q12-pod.yaml q10.yaml
+
+13.v kubectl create deployment nginx-deploy --image=nginx:1.16 --replicas=1
+     kubectl describe po | grep image
+     kubectl set image deployment nginx-deploy nginx=nginx:1.17 --record=true
+
+       - Normal  Pulling    106s  kubelet            Pulling image "nginx:1.17"
+       - Normal  Pulled     78s   kubelet            Successfully pulled image "nginx:1.17" in 28.394390912s
+
+     kubectl rollout status deployment/nginx-deploy
+     kubectl edit deploy nginx-deploy
+
+    annotations:
+    deployment.kubernetes.io/revision: "2"
+    kubernetes.io/change-cause: kubectl1.25.4 set image deployment nginx-deploy nginx=nginx:1.17
+
+14. q14pod.yaml
+    q14svc.yaml
+
+    kubectl exec -ti nginx-resolver -- /bin/bash
+    apt-get update
+    apt-get install -y busybox
+    busybox nslookup nginx-resolver-service.default.svc.cluster.local \
+              > /root/nginx-yourname.svc 
+             Server:	10.43.0.10
+             Address:	10.43.0.10:53
+
+             Name:	nginx-resolver-service.default.svc.cluster.local
+             Address: 10.43.233.118
+
+15. ssh node01
+    #mkdir -p /etc/kubernetes/manifests/
+cat <<EOF >/etc/kubernetes/manifests/static-web.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-critical
+spec:
+  containers:
+    - name: nginx-critical
+      image: nginx
+      ports:
+        - name: nginx-critical
+          containerPort: 80
+          protocol: TCP
+EOF

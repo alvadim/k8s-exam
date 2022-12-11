@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: finance-alvadim
+  labels:
+    name: temp-bus
+...
+apiVersion: v1
+kind: Pod
+metadata:
+  name: temp-bus
+  namespace: finance-alvadim
+  labels:
+    name: temp-bus
+spec:
+  containers:
+  - name: temp-bus
+    image: redis:alpine
