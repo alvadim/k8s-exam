@@ -10,8 +10,8 @@ spec:
   - image: nginx
     name: nginx
     envFrom:
-        - configMapRef:
-            name: keyvalcfgmap
+    - configMapRef:
+        name: keyvalcfgmap
     resources: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Never

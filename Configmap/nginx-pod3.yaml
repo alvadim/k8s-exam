@@ -8,10 +8,11 @@ metadata:
 spec:
   containers:
   - image: nginx
+    command: [ "/bin/bash", "-c", "ls /etc/config/" ]
     name: nginx
     volumeMounts:
       - name: keyvol
-        mountPath: /etc/config_detales
+        mountPath: /etc/config
     resources: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Never

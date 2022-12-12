@@ -1,9 +1,11 @@
 1. Type the command for: Get pods with label information
-    answer:
+
+answer:
         kubectl get pods --show-labels
 
 2. Create 5 nginx pods in which two of them is labeled env=prod and three of them is
 labeled env=dev 
+
 answer:
     2pod.yaml
     3pod.yaml
@@ -56,9 +58,8 @@ answer:
         kubectl get po --show-labels
 
 12. Remove the labels for the pods that we created now and verify all the labels are
-
-answer:
       removed
+answer:
         kubectl label pods --all env-
 
 13. Let’s add the label app=nginx for all the pods and verify (using kubectl)
@@ -76,8 +77,8 @@ answer:
 answer:
         kubectl label nodes worker nodeName=nginxnode
 
-16. Create a Pod that will be deployed on the worker node with the label
-           nodeName=nginxnode
+16. Create a Pod that will be deployed on the worker node with the label nodeName=nginxnode
+
 answer:          
         see nginx-pod.yaml
 

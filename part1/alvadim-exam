@@ -50,16 +50,16 @@ c. Replicas: 2
 	answer:  kubectl create deployment hr-web-app --image=kodekloud/webapp-color --replicas=2
 
 
-######
 8. Create a static pod named static-busybox on the master node that uses the busybox
 image and the command sleep 1000
 a. Name: static-busybox
 b. Image: busybox
 
-answer:  minikube ssh
-    1- kubectl run static-busybox --image=busybox --dry-run=client -o yaml > static-busybox.yaml
-    2- add command sleep 1000 to static-busybox.yaml
-    3- cp static-busybox.yaml /etc/kubernetes/manifests
+answer:  
+    1- kubectl run static-busybox --image=busybox --command=true -- sleep 1000 
+    2- kubectl get po static-busybox -o yaml > static-busybox.yaml (cleen it)
+    3- copy static-busybox.yaml to /etc/kubernetes/manifests of master node
+
     see static-busybox.yaml
 
 
@@ -122,30 +122,32 @@ d. Task: Record the changes for the image upgrade
 with a service called nginx-resolver-service. Test that you are able to look up the
 service and pod names from within the cluster. Use the image: busybox:1.28 for dns
 lookup. Record results in /root/nginx-yourname.svc and /root/nginx-yourname.pod
-# Test for question 14: curl http://nginx-resolver-service.default.svc 
 
+answer:
 	q14pod.yaml
   q14svc.yaml
 
     kubectl exec -ti nginx-resolver -- /bin/bash
+
+    curl http://nginx-resolver-service.default.svc
+
     apt-get update
     apt-get install -y busybox
-    busybox nslookup nginx-resolver-service.default.svc.cluster.local 
-              > /root/nginx-yourname.svc 
+    busybox nslookup nginx-resolver-service.default.svc.cluster.local > /root/nginx-yourname.svc 
+    busybox nslookup nginx-resolver-service.default.svc.cluster.local
              Server:	10.43.0.10
              Address:	10.43.0.10:53
 
              Name:	nginx-resolver-service.default.svc.cluster.local
              Address: 10.43.233.118
 
-####
 15. Create a static pod on node01 called nginx-critical with image nginx. Create this pod
 on node01 and make sure that it is recreated/restarted automatically in case of a
 failure.
 
-
-     /etc/kubernetes/manifests/
-cat <<EOF >/etc/kubernetes/manifests/static-web.yaml
+ folder on the node to place static pod manifest:  /etc/kubernetes/manifests/
+-------------------
+cat <<EOF >/etc/kubernetes/manifests/nginx-critical.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -159,10 +161,7 @@ spec:
           containerPort: 80
           protocol: TCP
 EOF
-
-  # place static-web.yaml to  /etc/kubernetes/manifests/ on node01
-  kubectl apply -f static-web.yaml
-  kubectl get po static-web.yaml -o wide 
+--------------------
 
 16. Create a pod called multi-pod with two containers.
 Container 1, name: alpha, image: nginx
