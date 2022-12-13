@@ -1,31 +1,31 @@
 1. Deploy a pod named nginx-pod using the nginx:alpine image.
-Name: nginx-pod-yourname
-Image: nginx:alpine
+    Name: nginx-pod-yourname
+    Image: nginx:alpine
 	
-answer:  
+  answer:  
   
-  kubectl run nginx-pod-alvadim --image=nginx:alpine
+    kubectl run nginx-pod-alvadim --image=nginx:alpine
 
 2. Deploy a messaging pod using the redis:alpine image with the labels set to tier=msg.
-Pod Name: messaging
-Image: redis:alpine
-Labels: tier=msg
+    Pod Name: messaging
+    Image: redis:alpine
+    Labels: tier=msg
 
-answer:  
+  answer:  
   
-  kubectl run messaging --image=redis:alpine -l tier=msg 
+    kubectl run messaging --image=redis:alpine -l tier=msg 
 
 3. Create a namespace named apx-x998-yourname
 
-answer: 
+  answer: 
   
-  kubectl create ns apx-x998-alvadim 
+    kubectl create ns apx-x998-alvadim 
 
 4. Get the list of nodes in JSON format and store it in a file at /tmp/nodes-yourname
 
-answer: 
+  answer: 
   
-  kubectl get nodes -o json > /tmp/nodes-alvadim
+    kubectl get nodes -o json > /tmp/nodes-alvadim
 
 5. Create a service messaging-service to expose the messaging application within the
 cluster on port 6379.
@@ -35,11 +35,11 @@ c. Port: 6379
 d. Type: ClusterIp
 e. Use the right 
 
-answer:
+  answer:
 	
-	kubectl create service clusterip messaging-service --tcp=6379:6379
+	  kubectl create service clusterip messaging-service --tcp=6379:6379
 
-  kubectl label service messaging-service tier=msg
+    kubectl label service messaging-service tier=msg
 
 6. Create a service messaging-service to expose the messaging application within the
 cluster on port 6379.
@@ -48,7 +48,9 @@ b. Port: 6379
 c. Type: ClusterIp
 d. Use the right labels
 
-	answer:  q6.yaml
+	answer:  
+    
+    q6.yaml
 
 7. Create a deployment named hr-web-app using the image kodekloud/webapp-color
 with 2 replicas
@@ -56,9 +58,9 @@ a. Name: hr-web-app
 b. Image: kodekloud/webapp-color
 c. Replicas: 2
 
-answer:  
+  answer:  
   
-  kubectl create deployment hr-web-app --image=kodekloud/webapp-color --replicas=2
+    kubectl create deployment hr-web-app --image=kodekloud/webapp-color --replicas=2
 
 
 8. Create a static pod named static-busybox on the master node that uses the busybox
@@ -66,11 +68,11 @@ image and the command sleep 1000
 a. Name: static-busybox
 b. Image: busybox
 
-answer: 
+  answer: 
 
-  kubectl run static-busybox --image=busybox --command=true -- sleep 1000 
+    kubectl run static-busybox --image=busybox --command=true -- sleep 1000 
 
-  kubectl get po static-busybox -o yaml > static-busybox.yaml 
+    kubectl get po static-busybox -o yaml > static-busybox.yaml 
 
   copy static-busybox.yaml to /etc/kubernetes/manifests of master node
 
@@ -82,13 +84,13 @@ redis:alpine
 a. Name: temp-bus
 b. Image Name: redis:alpine
 
- answer:  
+  answer:  
  
-  kubectl create ns finance-alvadim
+    kubectl create ns finance-alvadim
 
-  kubectl run temp-bus --image=redis:alpine --namespace=finance-alvadim
+    kubectl run temp-bus --image=redis:alpine --namespace=finance-alvadim
 
-   also q9.yaml
+    also q9.yaml
 
 10. Create a Persistent Volume with the given specification
 a. Volume Name: pv-analytics
@@ -96,9 +98,9 @@ b. Storage: 100Mi
 c. Access modes: ReadWriteMany
 d. Host Path: /pv/data-analytics
 
-answer: 	
+  answer: 	
 
-  q10.yaml
+    q10.yaml
 
 11. Create a Pod called redis-storage-yourname with image: redis:alpine with a Volume
 of type emptyDir that lasts for the life of the Pod. specs:.
@@ -107,17 +109,17 @@ b. Pod 'redis-storage-yourname' uses Volume type of emptyDir
 c. Pod 'redis-storage-yourname' uses volumeMount with mountPath =
 /data/redis
 
-answer:  
+  answer:  
 
-  q11.yaml
+    q11.yaml
 
 12. Create this pod and attached it a persistent volume called pv-1
 a. Make sure the PV mountPath is hostbase : /data
 
-answer:  
+  answer:  
 
-  pvolume.yaml  
-  q12pv.yaml 
+    pvolume.yaml  
+    q12pv.yaml 
 
 13. Create a new deployment called nginx-deploy, with image nginx:1.16 and 1 replica.
 Record the version. Next upgrade the deployment to version 1.17 using rolling
@@ -127,22 +129,22 @@ b. Image: nginx:1.16
 c. Task: Upgrade the version of the deployment to 1:17
 d. Task: Record the changes for the image upgrade
 
-answer:
+  answer:
 
-	kubectl create deployment nginx-deploy --image=nginx:1.16 --replicas=1
+	  kubectl create deployment nginx-deploy --image=nginx:1.16 --replicas=1
 
-  kubectl describe po | grep image
+    kubectl describe po | grep image
 
-  kubectl set image deployment nginx-deploy nginx=nginx:1.17 --record=true
+    kubectl set image deployment nginx-deploy nginx=nginx:1.17 --record=true
 
 
     - Normal  Pulling    106s  kubelet            Pulling image "nginx:1.17"
     - Normal  Pulled     78s   kubelet            Successfully pulled image "nginx:1.17"        
 
 
-  kubectl rollout status deployment/nginx-deploy
+    kubectl rollout status deployment/nginx-deploy
 
-  kubectl edit deploy nginx-deploy
+    kubectl edit deploy nginx-deploy
 
 
     annotations:
@@ -154,14 +156,13 @@ with a service called nginx-resolver-service. Test that you are able to look up 
 service and pod names from within the cluster. Use the image: busybox:1.28 for dns
 lookup. Record results in /root/nginx-yourname.svc and /root/nginx-yourname.pod
 
-answer:
+  answer:
 
-	q14pod.yaml
+	  q14pod.yaml
+    q14svc.yaml
 
-  q14svc.yaml
 
-
-  kubectl exec -ti nginx-resolver -- /bin/bash
+    kubectl exec -ti nginx-resolver -- /bin/bash
 
     curl http://nginx-resolver-service.default.svc
 
@@ -181,22 +182,22 @@ failure.
 
 folder on the node to place static pod manifest:  /etc/kubernetes/manifests/
 
-
-cat <<EOF >/etc/kubernetes/manifests/nginx-critical.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nginx-critical
-spec:
-  containers:
-    - name: nginx-critical
-      image: nginx
-      ports:
-        - name: nginx-critical
-          containerPort: 80
-          protocol: TCP
-EOF
-
+  --
+  cat <<EOF >/etc/kubernetes/manifests/nginx-critical.yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+   name: nginx-critical
+  spec:
+    containers:
+      - name: nginx-critical
+        image: nginx
+        ports:
+          - name: nginx-critical
+            containerPort: 80
+            protocol: TCP
+  EOF
+  --
 
 16. Create a pod called multi-pod with two containers.
 Container 1, name: alpha, image: nginx
@@ -210,6 +211,6 @@ iii.
 iv.
 Container 2:
 name: beta
-answer:
+  answer:
 
-	q16.yaml
+	  q16.yaml

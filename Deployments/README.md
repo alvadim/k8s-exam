@@ -113,25 +113,25 @@
         kubectl set image deployment webapp nginx=nginx:latest --record=true
 
         kubectl rollout history deploy webapp 
-    ---
+    
     deployment.apps/webapp 
     REVISION  CHANGE-CAUSE
     2         kubectl1.25.4 set image deployment webapp nginx=nginx:1.17.4 --record=true
     4         kubectl1.25.4 set image deployment webapp nginx=nginx:1.100 --record=true
     5         <none>
     6         kubectl1.25.4 set image deployment webapp nginx=nginx:latest --record=true
-    ---
+    
 
-    11. Apply the autoscaling to this deployment with minimum 10 and maximum 20 replicas
+11. Apply the autoscaling to this deployment with minimum 10 and maximum 20 replicas
         and target CPU of 85% and verify hpa is created and replicas are increased to 10 from 1
 
     answer:
 
         kubectl autoscale deploy/webapp --cpu-percent=85 --min=10 --max=20
 
-    12. empty question?
+12. empty question?
 
-    13. Clean the cluster by deleting deployment and hpa you just created
+13. Clean the cluster by deleting deployment and hpa you just created
 
     answer:
 
@@ -139,7 +139,7 @@
 
         kubectl delete hpa webapp
 
-    14. Create a job and make it run 10 times one after one (run > exit > run >exit ..) using
+14. Create a job and make it run 10 times one after one (run > exit > run >exit ..) using
         the following configuration:
     kubectl create job hello-job --image=busybox --dry-run -o yaml -- echo "Hello I am
     from job" > hello-job.yaml”
