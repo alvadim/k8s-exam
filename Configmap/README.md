@@ -12,11 +12,13 @@ cat config.txt
 Create a configmap named keyvalcfgmap and read data from the file config.txt and
 verify that configmap is created correctly
 
-answer:  
-kubectl create configmap keyvalcfgmap --from-file=config.txt 
-kubectl get cm keyvalcfgmap -o yaml > keyvalcfgmap.yaml
+answer:
 
-keyvalcfgmap.yaml
+    kubectl create configmap keyvalcfgmap --from-file=config.txt 
+
+    kubectl get cm keyvalcfgmap -o yaml > keyvalcfgmap.yaml
+
+    keyvalcfgmap.yaml
 
 
 3. Create an nginx pod and load environment values from the above configmap
@@ -25,7 +27,7 @@ the pod
 // first run this command to save the pod yml
 kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml > nginx-pod.yaml
 
-  answer:
+answer:
   
-  nginx-pod2.yaml
+    nginx-pod2.yaml
   
