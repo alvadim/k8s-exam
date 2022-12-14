@@ -6,7 +6,7 @@ metadata:
     tier: msg
 spec:
   selector:
-    app: messaging-servise
+    tier: msg
   ports:         
   - name: messaging-servise
     protocol: TCP
