@@ -180,24 +180,38 @@ lookup. Record results in /root/nginx-yourname.svc and /root/nginx-yourname.pod
 on node01 and make sure that it is recreated/restarted automatically in case of a
 failure.
 
-folder on the node to place static pod manifest:  /etc/kubernetes/manifests/
+  	﻿Solution
 
-  --
-  cat <<EOF >/etc/kubernetes/manifests/nginx-critical.yaml
-  apiVersion: v1
-  kind: Pod
-  metadata:
-   name: nginx-critical
-  spec:
-    containers:
-      - name: nginx-critical
-        image: nginx
-        ports:
-          - name: nginx-critical
-            containerPort: 80
-            protocol: TCP
-  EOF
-  --
+	Using minikube
+	minikube start –nodes=2      # to get control plane AND worker node
+
+	kubectl get nodes
+
+	---NAME           STATUS   ROLES           AGE     VERSION
+	    minikube       Ready    control-plane   9m43s   v1.25.3
+	    minikube-m02   Ready    <none>          9m15s   v1.25.3
+
+	# minikube-m02 is worker node
+
+	minikube ssh –node=m02
+  
+	sudo -i
+
+	# creating static pod manifest and placing it to etc/kubernetes/manifests folder
+
+	cat <<EOF >/etc/kubernetes/manifests/nginx-critical.yaml
+	apiVersion: v1
+	kind: Pod
+	metadata:
+	  name: nginx-critical
+	spec:
+	  containers:
+	    - name: nginx-critical
+	      image: nginx
+	      ports:
+	        - name: nginx-critical
+	          containerPort: 80
+	          protocol: TCP
 
 16. Create a pod called multi-pod with two containers.
 Container 1, name: alpha, image: nginx
